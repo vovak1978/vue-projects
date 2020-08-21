@@ -1,7 +1,15 @@
 <template>
   <div>
+    <div v-if="errormessage">
+      <p>"Виправте наступні помилки"</p>
+      <ul>
+        <li>{{errormessage}}</li>
+      </ul>
+      
+    </div>
     <div class="container">
-    <input v-model="message">
+      <input type="text" v-model="message" >
+    <!-- <input v-model="message"> -->
    <button v-on:click="addlist" v-if="todoarray.length == 10 ?show = false :show=true">Add new todo</button> <br>    
     </div>
   <div class="container">
@@ -21,14 +29,22 @@ data() {
   return {
   message: '',  
   todoarray: [],
+  errormessage: '' 
    }
   },
 
 methods: {
   addlist: function() {
-        console.log(this.message) 
-       this.todoarray.push(this.message);
+       this.errormessage = '' 
+       
+       if (! this.message) {
+         this.errormessage = 'Поле не може бути пусте';
+         console.log(this.errormessage)
+       }
+       else{
+      this.todoarray.push(this.message);
        this.message = ''
+       }
        },
   
   remove: function(index) {
